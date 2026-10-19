@@ -6,81 +6,81 @@ import { formatRupiah } from "@/lib/format";
 
 export default function TombolWhatsApp({ produk }) {
   const [jumlah, setJumlah] = useState(1);
-  const [varian, setVarian] = useState("Reguler");
+  const [varian, setVarian] = useState("");
 
-  const totalHarga = (produk?.harga || 0) * jumlah;
   const nomor = toko.nomorWhatsApp?.replace(/\D/g, "");
+  const totalHarga = (produk?.harga || 0) * jumlah;
 
-  const daftarVarian = ["Reguler", "Spesial / Hampers", "Custom Card"];
-
-  const pesan = `Halo, saya ingin memesan:\n• Produk: ${produk.nama}\n• Varian: ${varian}\n• Jumlah: ${jumlah}\n• Total: ${formatRupiah(totalHarga)}`;
+  // Bangun baris varian hanya jika ada isi
+  const barisVarian = varian.trim() ? `\n• Varian: ${varian.trim()}` : "";
+  const pesan =
+    `Halo, saya ingin memesan:\n` +
+    `• Produk: ${produk.nama}${barisVarian}\n` +
+    `• Jumlah: ${jumlah}\n` +
+    `• Harga satuan: ${formatRupiah(produk.harga)}\n` +
+    `• Total: ${formatRupiah(totalHarga)}`;
   const url = `https://wa.me/${nomor}?text=${encodeURIComponent(pesan)}`;
 
   return (
     <div className="flex flex-col gap-4">
-      {/* Pilihan Varian (US-12) */}
+      {/* Pilihan Varian — boleh dikosongkan jika tidak ada varian */}
       <div className="flex flex-col gap-1.5 text-sm">
-        <label className="font-semibold text-teks">Pilihan Varian:</label>
-        <div className="flex flex-wrap gap-2">
-          {daftarVarian.map((v) => {
-            const aktif = varian === v;
-            return (
-              <button
-                key={v}
-                type="button"
-                onClick={() => setVarian(v)}
-                className={`rounded-lg border px-3 py-1.5 text-xs font-semibold transition-colors ${
-                  aktif
-                    ? "border-utama bg-utama text-white"
-                    : "border-garis bg-latar text-teks-lembut hover:border-utama hover:text-utama"
-                }`}
-              >
-                {v}
-              </button>
-            );
-          })}
+        <label htmlFor="varian" className="font-semibold text-teks">
+          Varian / catatan <span className="font-normal text-teks-lembut">(opsional)</span>
+        </label>
+        <input
+          id="varian"
+          type="text"
+          placeholder="Contoh: Merah, Ukuran M, Tanpa pedas..."
+          value={varian}
+          onChange={(e) => setVarian(e.target.value)}
+          className="rounded-lg border border-garis bg-latar px-3 py-2 text-sm text-teks placeholder:text-teks-lembut focus:border-utama focus:outline-none"
+        />
+      </div>
+
+      {/* Pilihan Jumlah */}
+      <div className="flex items-center gap-4 text-sm">
+        <span className="font-semibold text-teks">Jumlah:</span>
+        <div className="flex items-center rounded-lg border border-garis bg-latar">
+          <button
+            type="button"
+            onClick={() => setJumlah((j) => Math.max(1, j - 1))}
+            aria-label="Kurangi jumlah"
+            className="flex h-9 w-9 items-center justify-center rounded-l-lg text-lg font-bold text-teks-lembut hover:bg-permukaan"
+          >
+            −
+          </button>
+          <span className="w-10 text-center font-semibold">{jumlah}</span>
+          <button
+            type="button"
+            onClick={() => setJumlah((j) => j + 1)}
+            aria-label="Tambah jumlah"
+            className="flex h-9 w-9 items-center justify-center rounded-r-lg text-lg font-bold text-teks-lembut hover:bg-permukaan"
+          >
+            +
+          </button>
+        </div>
+
+        {/* Total harga perkiraan */}
+        <div className="ml-auto text-right">
+          <p className="text-xs text-teks-lembut">Total perkiraan</p>
+          <p className="text-base font-bold text-harga">{formatRupiah(totalHarga)}</p>
         </div>
       </div>
 
-      {/* Pilihan Jumlah (US-12) */}
-      <div className="flex items-center justify-between rounded-xl border border-garis bg-permukaan/50 p-3 text-sm">
-        <div className="flex items-center gap-3">
-          <label className="font-semibold text-teks">Jumlah:</label>
-          <div className="flex items-center rounded-lg border border-garis bg-latar">
-            <button
-              type="button"
-              onClick={() => setJumlah((prev) => Math.max(1, prev - 1))}
-              className="flex h-8 w-8 items-center justify-center rounded-l-lg text-base font-bold text-teks-lembut hover:bg-permukaan focus:outline-none"
-              aria-label="Kurangi jumlah"
-            >
-              -
-            </button>
-            <span className="w-10 text-center font-semibold text-teks">{jumlah}</span>
-            <button
-              type="button"
-              onClick={() => setJumlah((prev) => prev + 1)}
-              className="flex h-8 w-8 items-center justify-center rounded-r-lg text-base font-bold text-teks-lembut hover:bg-permukaan focus:outline-none"
-              aria-label="Tambah jumlah"
-            >
-              +
-            </button>
-          </div>
-        </div>
-
-        <div className="text-right">
-          <p className="text-xs text-teks-lembut">Total:</p>
-          <p className="font-bold text-harga">{formatRupiah(totalHarga)}</p>
-        </div>
-      </div>
-
-      {/* Tombol Pesan WhatsApp */}
+      {/* Tombol Pesan */}
       <a
         href={url}
         target="_blank"
         rel="noopener noreferrer"
-        className="inline-flex w-full items-center justify-center rounded-lg bg-utama px-5 py-3 font-semibold text-white transition-colors hover:bg-utama-gelap sm:w-auto"
+        className="inline-flex w-full items-center justify-center gap-2 rounded-lg bg-utama px-5 py-3 font-semibold text-white hover:bg-utama-gelap sm:w-auto"
       >
-        Pesan via WhatsApp ({jumlah} item)
+        Pesan via WhatsApp
+        {jumlah > 1 && (
+          <span className="rounded-full bg-white/20 px-2 py-0.5 text-xs">
+            {jumlah} item
+          </span>
+        )}
       </a>
     </div>
   );
