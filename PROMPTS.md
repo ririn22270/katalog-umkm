@@ -114,3 +114,9 @@ Buat file proxy.js di root proyek (Next.js 16). Semua rute /admin kecuali /admin
 ### US-10 Hapus Produk Admin
 - Mengubah `components/TabelProduk.jsx` agar tombol "Hapus" meminta konfirmasi dialog browser `confirm(...)`.
 - Membuat Server Action `hapusProduk` di `app/admin/actions.js` yang terkunci autentikasi admin untuk menghapus baris produk dari database.
+
+### US-11 Filter Kategori dan Pencarian Produk
+- Membuat komponen `components/KatalogProduk.jsx` yang menyediakan input pencarian nama produk dan tombol pill filter kategori dinamis.
+- Mengintegrasikan `KatalogProduk` ke `app/page.jsx` agar pengunjung dapat memfilter produk berdasarkan kategori dan mencari berdasarkan nama secara instan.
+
+
