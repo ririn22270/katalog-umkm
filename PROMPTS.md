@@ -119,4 +119,10 @@ Buat file proxy.js di root proyek (Next.js 16). Semua rute /admin kecuali /admin
 - Membuat komponen `components/KatalogProduk.jsx` yang menyediakan input pencarian nama produk dan tombol pill filter kategori dinamis.
 - Mengintegrasikan `KatalogProduk` ke `app/page.jsx` agar pengunjung dapat memfilter produk berdasarkan kategori dan mencari berdasarkan nama secara instan.
 
+### US-12 Pilih Jumlah atau Varian Produk
+- Menambahkan pemilih varian ("Reguler", "Spesial / Hampers", "Custom Card") dan counter jumlah (+ / -) pada `components/TombolWhatsApp.jsx`.
+- Menghitung total harga produk secara dinamis sesuai jumlah yang dipilih.
+- Menyertakan pilihan varian, jumlah, dan total harga ke dalam format pesan WhatsApp otomatis.
+
+
 

@@ -77,4 +77,4 @@ Urutan yang disarankan: US-01, US-02, US-03, US-04, US-05, US-06, lalu fitur bon
 - **Nama usaha:** Roselle Florist
 - **Pembuat:** Ririn Anisa
 - **Link aplikasi:** https://katalog-umkm.vercel.app
-- **Fitur bonus yang dikerjakan:** US-07 (List produk admin dari database), US-08 (Tambah produk), US-09 (Ubah produk), US-10 (Hapus produk), US-11 (Filter kategori & pencarian)
+- **Fitur bonus yang dikerjakan:** US-07 (List produk admin dari database), US-08 (Tambah produk), US-09 (Ubah produk), US-10 (Hapus produk), US-11 (Filter kategori & pencarian), US-12 (Pilih jumlah & varian)
